@@ -244,7 +244,6 @@ pipeline {
       }
       steps {
         script {
-          input "Destroy Terraform stack eks-${params.cluster} in aws?" 
 
           withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
             credentialsId: params.credential, 
