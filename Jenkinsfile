@@ -38,6 +38,28 @@ pipeline {
       }
     }
 
+    stage('Setup kubectl helm terraform and eksctl binaries') {
+            steps {
+              script {
+
+                println "Getting the kubectl helm and eksctl binaries..."
+                sh """
+                  curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_\$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                  curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/kubectl
+                  curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+                  chmod 700 get_helm.sh
+                  chmod +x ./kubectl
+                  sudo mv ./kubectl /usr/local/bin
+                  sudo mv /tmp/eksctl /usr/local/bin
+                  ./get_helm.sh
+                  sudo yum install -y yum-utils
+                  sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+                  sudo yum -y install terraform
+                """
+              }
+            }
+        } 
+
     stage('TF Plan') {
       when {
         expression { params.action == 'create' }
