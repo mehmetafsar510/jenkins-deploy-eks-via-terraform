@@ -19,6 +19,10 @@ pipeline {
     string(name: 'region', defaultValue : 'us-east-1', description: "AWS region.")
   }
 
+  environment{
+        PATH="/usr/local/bin/:${env.PATH}"
+    }
+
   options {
     disableConcurrentBuilds()
     timeout(time: 1, unit: 'HOURS')
