@@ -33,20 +33,13 @@ pipeline {
 
   stages {
 
-    stage('Setup') {
-      steps {
-        script {
-          currentBuild.displayName = "#" + env.BUILD_NUMBER + " " + params.action + " eks-" + params.cluster
-          plan = params.cluster + '.plan'
-        }
-      }
-    }
-
-    stage('Setup kubectl helm terraform and eksctl binaries') {
+    stage('Setup kubectl helm terraform binaries') {
             steps {
               script {
+                currentBuild.displayName = "#" + env.BUILD_NUMBER + " " + params.action + " eks-" + params.cluster
+                plan = params.cluster + '.plan'
 
-                println "Getting the kubectl helm and eksctl binaries..."
+                println "Getting the kubectl helm and terraform binaries..."
                 sh """
                   curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_\$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
                   curl -o kubectl https://amazon-eks.s3.us-west-2.amazonaws.com/1.17.9/2020-08-04/bin/linux/amd64/kubectl
