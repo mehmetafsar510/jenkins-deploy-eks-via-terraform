@@ -6,24 +6,23 @@ pipeline {
     choice(name: 'k8s_version', choices: '1.17\n1.18\n1.16\n1.15', description: 'K8s version to install.')
     string(name: 'vpc_network', defaultValue : '10.0', description: "First 2 octets of vpc network; eg 10.0")
     string(name: 'num_subnets', defaultValue : '3', description: "Number of vpc subnets/AZs.")
-    string(name: 'instance_type', defaultValue : 'm5.large', description: "k8s worker node instance type.")
-    string(name: 'num_workers', defaultValue : '3', description: "k8s number of worker instances.")
-    string(name: 'max_workers', defaultValue : '10', description: "k8s maximum number of worker instances that can be scaled.")
+    string(name: 'instance_type', defaultValue : 't2.medium', description: "k8s worker node instance type.")
+    string(name: 'num_workers', defaultValue : '1', description: "k8s number of worker instances.")
+    string(name: 'max_workers', defaultValue : '2', description: "k8s maximum number of worker instances that can be scaled.")
     string(name: 'admin_users', defaultValue : '', description: "Comma delimited list of IAM users to add to the aws-auth config map.")
     string(name: 'credential', defaultValue : 'jenkins', description: "Jenkins credential that provides the AWS access key and secret.")
-    string(name: 'key_pair', defaultValue : 'spicysomtam-aws4', description: "EC2 instance ssh keypair.")
+    string(name: 'key_pair', defaultValue : 'the_doctor', description: "EC2 instance ssh keypair.")
     booleanParam(name: 'cloudwatch', defaultValue : true, description: "Setup Cloudwatch logging, metrics and Container Insights?")
     booleanParam(name: 'nginx_ingress', defaultValue : true, description: "Setup nginx ingress and load balancer?")
     booleanParam(name: 'ca', defaultValue : false, description: "Setup k8s Cluster Autoscaler?")
     booleanParam(name: 'cert_manager', defaultValue : false, description: "Setup cert-manager for certificate handling?")
-    string(name: 'region', defaultValue : 'eu-west-1', description: "AWS region.")
+    string(name: 'region', defaultValue : 'us-east-1', description: "AWS region.")
   }
 
   options {
     disableConcurrentBuilds()
     timeout(time: 1, unit: 'HOURS')
     withAWS(credentials: params.credential, region: params.region)
-    ansiColor('xterm')
   }
 
   agent { label 'master' }
