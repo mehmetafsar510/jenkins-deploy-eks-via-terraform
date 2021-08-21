@@ -4,7 +4,7 @@
 
 variable "aws_region" {
   description = "The AWS region to create things in."
-  default     = "eu-west-1"
+  default     = "us-east-1"
 }
 
 variable "cluster-name" {
@@ -38,32 +38,32 @@ variable "vpc-subnets" {
 
 variable "inst-type" {
   description = "EKS worker instance type."
-  default     = "m5.large"
+  default     = "t2.medium"
   type        = string
 }
 
 # I bumped this up as 20Gb is way to small for all those docker images that will be pulled.
 variable "inst_disk_size" {
   description = "EKS worker instance disk size in Gb."
-  default     = "60"
+  default     = "10"
   type        = string
 }
 
 variable "inst_key_pair" {
   description = "EKS worker instance ssh key pair."
-  default     = "spicysomtam-aws4"
+  default     = "the_doctor"
   type        = string
 }
 
 variable "num-workers" {
   description = "Number of eks worker instances to deploy."
-  default = "3"
+  default = "1"
   type    = string
 }
 
 variable "max-workers" {
   description = "Max number of eks worker instances that can be scaled."
-  default = "10"
+  default = "2"
   type    = string
 }
 
