@@ -2,7 +2,7 @@
 
 Deploy AWS EKS via a Jenkins job using terraform. The idea here is to easily deploy EKS to AWS, specifying some settings via pipeline parameters.
 
-`eksctl` has now come along since I wrote this repo, and that is now my preferred way of deploying EKS. Thus I created an `eksctl` based deployment [here](https://github.com/spicysomtam/jenkins-deploy-eks-via-eksctl) .
+`eksctl` has now come along since I wrote this repo, and that is now my preferred way of deploying EKS.
 
 I am still maintaining this repo, but have moved most of the docs to my `eksctl` repo (to save duplication).
 
